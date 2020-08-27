@@ -32,26 +32,25 @@ if __name__ == '__main__':
     ActionChains(driver).move_to_element(login_button).click(login_button).perform()
     print('点击登陆')
 
+
     locator = (By.CSS_SELECTOR, 'body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(4) > div > input[type=text]')
     location_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
-    
-    try:
-        ActionChains(driver).move_to_element(location_button).click(location_button).perform()
-        print('获取位置')
-    except:
-        pass
+    driver.execute_script("arguments[0].click();",location_button)
+    # ActionChains(driver).move_to_element(location_button).click(location_button).perform()
+    print('获取位置')
 
-    try:
-        # 选择温度
-        temperature_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(5) > div > div > div:nth-child(2) > span:nth-child(1) > i')
-        ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
-    except:
-        pass
+
+    time.sleep(0.5)
+    # 选择温度
+    temperature_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(5) > div > div > div:nth-child(2) > span:nth-child(1) > i')
+    # ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
+    driver.execute_script("arguments[0].click();",temperature_button)
 
     try:
         # 点击提交
         submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
-        ActionChains(driver).move_to_element(submit_button).click(submit_button).perform()
+        driver.execute_script("arguments[0].click();",submit_button)
+        # ActionChains(driver).move_to_element(submit_button).click(submit_button).perform()
         print('点击提交')
     except:
         print('已提交过')
