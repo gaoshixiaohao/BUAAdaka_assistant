@@ -9,13 +9,13 @@ from userinfo import UserInfo
 
 if __name__ == '__main__':
     userinfo = UserInfo()
-    #这里改成你的统一认证用户名和密码
+    #在userinfo.py中改成你的统一认证用户名和密码
     user_name = userinfo.username
     pwd = userinfo.password
 
     # 加上这两句话不打开浏览器
     option = webdriver.ChromeOptions()
-    option.add_argument('headless') # 设置option
+    # option.add_argument('headless') # 设置option
     # 用浏览器打开打卡的网址
     driver = webdriver.Chrome(options=option)
     driver.get("https://app.buaa.edu.cn/site/ncov/xisudailyup")
@@ -32,6 +32,12 @@ if __name__ == '__main__':
     ActionChains(driver).move_to_element(login_button).click(login_button).perform()
     print('点击登陆')
 
+    locator = (By.XPATH, '/html/body/div[1]/div[1]/div/section/div[5]/div/a')
+    done_check = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
+    if 'you have been submitted' in done_check.text:
+        print('今天以提交过')
+        time.sleep(1)
+        driver.quit()
 
     locator = (By.CSS_SELECTOR, 'body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(4) > div > input[type=text]')
     location_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
@@ -46,14 +52,13 @@ if __name__ == '__main__':
     # ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
     driver.execute_script("arguments[0].click();",temperature_button)
 
-    try:
-        # 点击提交
-        submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
-        driver.execute_script("arguments[0].click();",submit_button)
-        # ActionChains(driver).move_to_element(submit_button).click(submit_button).perform()
-        print('点击提交')
-    except:
-        print('已提交过')
+    
+    # 点击提交
+    submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
+    driver.execute_script("arguments[0].click();",submit_button)
+    # ActionChains(driver).move_to_element(submit_button).click(submit_button).perform()
+    print('点击提交')
+    
 
     time.sleep(1)
     # 确定
@@ -64,11 +69,7 @@ if __name__ == '__main__':
         ActionChains(driver).move_to_element(confirm_button).click(confirm_button).perform()
         print('提交成功')
     except:
-        try:
-            confirm_button = driver.find_element_by_css_selector('#wapat > div > div.wapat-btn-box > div')
-            print('今天已提交过')
-        except:
-            time.sleep(0.5)
+        print('提交失败')
 
     time.sleep(1)
     driver.quit()
