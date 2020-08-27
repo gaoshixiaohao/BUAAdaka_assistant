@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 from userinfo import UserInfo
+from selenium.webdriver.firefox.options import Options
 
 
 if __name__ == '__main__':
@@ -14,15 +15,15 @@ if __name__ == '__main__':
     pwd = userinfo.password
 
     # 加上这两句话不打开浏览器
-    option = webdriver.ChromeOptions()
-    option.add_argument('headless') # 设置option
+    options = Options()
+    options.add_argument('--headless') # 设置option
     # 用浏览器打开打卡的网址
-    driver = webdriver.Chrome(options=option)
+    driver = webdriver.Firefox(firefox_options=options)
     driver.get("https://app.buaa.edu.cn/site/ncov/xisudailyup")
 
     # 输用户名和密码
     locator = (By.CSS_SELECTOR, '#app > div.content > div:nth-child(1) > input[type=text]')
-    user_name_input = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
+    user_name_input = WebDriverWait(driver, 20).until(EC.presence_of_element_located(locator))
     user_name_input.send_keys(user_name)
     user_pwd_input = driver.find_element_by_css_selector('#app > div.content > div:nth-child(2) > input[type=password]')
     user_pwd_input.send_keys(pwd)
