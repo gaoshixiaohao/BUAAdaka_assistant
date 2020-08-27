@@ -55,6 +55,8 @@ export DISPLAY=:7
 
 python autodaka.py
 
+**别忘了修改userinfo里面的账号密码**
+
 ### 定时任务
 
 nano crontab -e
