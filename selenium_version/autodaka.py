@@ -45,16 +45,6 @@ if __name__ == '__main__':
     # ActionChains(driver).move_to_element(location_button).click(location_button).perform()
     print('获取位置')
 
-    # 良坝发现的未获取地理位置的bug
-    time.sleep(0.5)
-    try:
-        geo_failed_button = driver.find_element_by_css_selector('#wapat > div > div.wapat-btn-box > div')   
-        driver.execute_script("arguments[0].click();",geo_failed_button)
-        time.sleep(0.5)
-        driver.execute_script("arguments[0].click();",location_button)
-    except:
-        pass
-
     time.sleep(2)
     # 选择温度
     temperature_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(5) > div > div > div:nth-child(2) > span:nth-child(1) > i')
