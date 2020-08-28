@@ -36,7 +36,7 @@ if __name__ == '__main__':
     locator = (By.XPATH, '/html/body/div[1]/div[1]/div/section/div[5]/div/a')
     done_check = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
     if 'you have been submitted' in done_check.text:
-        print('今天以提交过')
+        print('今天已提交过')
         time.sleep(1)
         driver.quit()
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
     driver.execute_script("arguments[0].click();",temperature_button)
 
-    
+    sleep(2)
     # 点击提交
     submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
     driver.execute_script("arguments[0].click();",submit_button)
