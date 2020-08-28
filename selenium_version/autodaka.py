@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # 加上这两句话不打开浏览器
     option = webdriver.ChromeOptions()
-    # option.add_argument('headless') # 设置option
+    option.add_argument('headless') # 设置option
     # 用浏览器打开打卡的网址
     driver = webdriver.Chrome(options=option)
     driver.get("https://app.buaa.edu.cn/site/ncov/xisudailyup")
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     locator = (By.XPATH, '/html/body/div[1]/div[1]/div/section/div[5]/div/a')
     done_check = WebDriverWait(driver, 10).until(EC.presence_of_element_located(locator))
     if 'you have been submitted' in done_check.text:
-        print('今天以提交过')
+        print('今天已提交过')
         time.sleep(1)
         driver.quit()
 
@@ -45,14 +45,23 @@ if __name__ == '__main__':
     # ActionChains(driver).move_to_element(location_button).click(location_button).perform()
     print('获取位置')
 
-
+    # 良坝发现的未获取地理位置的bug
     time.sleep(0.5)
+    try:
+        geo_failed_button = driver.find_element_by_css_selector('#wapat > div > div.wapat-btn-box > div')   
+        driver.execute_script("arguments[0].click();",geo_failed_button)
+        time.sleep(0.5)
+        driver.execute_script("arguments[0].click();",location_button)
+    except:
+        pass
+
+    time.sleep(2)
     # 选择温度
     temperature_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(5) > div > div > div:nth-child(2) > span:nth-child(1) > i')
     # ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
     driver.execute_script("arguments[0].click();",temperature_button)
 
-    
+    time.sleep(2)
     # 点击提交
     submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
     driver.execute_script("arguments[0].click();",submit_button)
