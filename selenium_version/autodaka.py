@@ -52,8 +52,9 @@ if __name__ == '__main__':
     temperature_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2.ncov-page > div:nth-child(1) > div > section > div.form > ul > li:nth-child(5) > div > div > div:nth-child(2) > span:nth-child(1) > i')
     # ActionChains(driver).move_to_element(temperature_button).click(temperature_button).perform()
     driver.execute_script("arguments[0].click();",temperature_button)
+    print('选择温度')
 
-    sleep(2)
+    time.sleep(2)
     # 点击提交
     submit_button = driver.find_element_by_css_selector('body > div.item-buydate.form-detail2 > div > div > section > div.list-box > div > a')
     driver.execute_script("arguments[0].click();",submit_button)
